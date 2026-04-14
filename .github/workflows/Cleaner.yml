@@ -1,0 +1,21 @@
+name: Cleanup Disk Space
+
+on:
+  workflow_dispatch: 
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clean up unnecessary files to free space
+        run: |
+          echo "📦 Removing unused packages and tools..."
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /opt/ghc
+          sudo rm -rf /opt/hostedtoolcache
+          sudo rm -rf "$AGENT_TOOLSDIRECTORY"
+          sudo apt-get clean
+          sudo docker image prune -af || true
+          
+          echo "📊 Current disk usage:"
+          df -h
