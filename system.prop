@@ -1,9 +1,24 @@
+# Build
 ro.secure=0
 ro.adb.secure=0
 ro.debuggable=1
+
+# Platform
 ro.vendor.mediatek.platform=MT6768
 ro.mediatek.platform=MT6768
+
+# USB Properties
 ro.sys.usb.bicr=no
 ro.sys.usb.charging.only=yes
 ro.sys.usb.mtp.whql.enable=0
 ro.sys.usb.storage.type=mtp
+
+# Crypto & Decryption
+ro.crypto.volume.filenames_mode=aes-256-cts
+ro.crypto.allow_encrypt_override=true
+ro.crypto.volume.metadata.method=dm-default-key
+ro.crypto.dm_default_key.options_format.version=2
+
+# Gatekeeper & Keymaster
+ro.hardware.gatekeeper=trustonic
+ro.hardware.kmsetkey=trustonic
