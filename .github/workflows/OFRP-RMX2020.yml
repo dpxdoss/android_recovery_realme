@@ -1,4 +1,4 @@
-name: OrangeFox [OFRP]
+name: OFRP-RMX2020
 
 on:
   workflow_dispatch:
