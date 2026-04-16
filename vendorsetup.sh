@@ -66,6 +66,7 @@ export OF_USE_LOCKSCREEN_BUTTON=1
 export OF_USE_GREEN_LED=0
 export OF_ALLOW_DISABLE_NAVBAR=0
 export OF_NO_SPLASH_CHANGE=1
+export OF_OPTIONS_LIST_NUM=6
 
 # ofrp directory
 export FOX_SETTINGS_ROOT_DIRECTORY="/persist/recovery"
