@@ -68,7 +68,6 @@ export OF_ALLOW_DISABLE_NAVBAR=0
 export OF_NO_SPLASH_CHANGE=1
 
 # ofrp directory
-export FOX_MISCELLANEOUS_ROOT_DIRECTORY="/sdcard/recovery"
 export FOX_SETTINGS_ROOT_DIRECTORY="/persist/recovery"
 export OF_QUICK_BACKUP_LIST="/nvram;/nvdata;/nvcfg;/protect_f;/protect_s;/proinfo;/oppo_custom;/md1img;"
 export FOX_RECOVERY_SYSTEM_PARTITION="/dev/block/mapper/system"
