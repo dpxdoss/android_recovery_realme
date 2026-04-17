@@ -34,8 +34,8 @@ if [ -z "$1" -a -z "$FOX_BUILD_DEVICE" ]; then
 fi
 
 # ofrp device
-export FOX_TARGET_DEVICES="RMX2020,RMX2027"
 export TARGET_DEVICE_ALT="RMX2020,RMX2027"
+export FOX_TARGET_DEVICES="$TARGET_DEVICE_ALT"
 
 # ofrp settings
 export ALLOW_MISSING_DEPENDENCIES=true
@@ -67,10 +67,11 @@ export OF_USE_GREEN_LED=0
 export OF_ALLOW_DISABLE_NAVBAR=0
 export OF_NO_SPLASH_CHANGE=1
 export OF_OPTIONS_LIST_NUM=8
+export OF_DEFAULT_TIMEZONE="GMT-5:30"
 
 # ofrp directory
-export FOX_SETTINGS_ROOT_DIRECTORY="/persist"
-export FOX_MISCELLANEOUS_ROOT_DIRECTORY="/sdcard"
+export FOX_SETTINGS_ROOT_DIRECTORY=/persist
+export FOX_MISCELLANEOUS_ROOT_DIRECTORY=/sdcard
 export OF_QUICK_BACKUP_LIST="/nvram;/nvdata;/nvcfg;/protect_f;/protect_s;/proinfo;/oppo_custom;/md1img;"
 export FOX_RECOVERY_SYSTEM_PARTITION="/dev/block/mapper/system"
 export FOX_RECOVERY_VENDOR_PARTITION="/dev/block/mapper/vendor"
@@ -104,7 +105,7 @@ export FOX_USE_XZ_UTILS=1
 
 # ofrp maintainer
 export OF_MAINTAINER="dantepaulxd"
-export FOX_BUILD_TYPE="Stable"
+export FOX_BUILD_TYPE="Beta"
 
 # ofrp logging
 export OF_DISPLAY_FORMAT_FILESYSTEMS_DEBUG_INFO=1
