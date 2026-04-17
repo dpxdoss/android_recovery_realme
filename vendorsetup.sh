@@ -66,10 +66,11 @@ export OF_USE_LOCKSCREEN_BUTTON=1
 export OF_USE_GREEN_LED=0
 export OF_ALLOW_DISABLE_NAVBAR=0
 export OF_NO_SPLASH_CHANGE=1
-export OF_OPTIONS_LIST_NUM=6
+export OF_OPTIONS_LIST_NUM=8
 
 # ofrp directory
-export FOX_SETTINGS_ROOT_DIRECTORY="/persist/recovery"
+export FOX_SETTINGS_ROOT_DIRECTORY="/persist"
+export FOX_MISCELLANEOUS_ROOT_DIRECTORY="/data/media/0"
 export OF_QUICK_BACKUP_LIST="/nvram;/nvdata;/nvcfg;/protect_f;/protect_s;/proinfo;/oppo_custom;/md1img;"
 export FOX_RECOVERY_SYSTEM_PARTITION="/dev/block/mapper/system"
 export FOX_RECOVERY_VENDOR_PARTITION="/dev/block/mapper/vendor"
