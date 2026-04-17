@@ -70,7 +70,7 @@ export OF_OPTIONS_LIST_NUM=8
 
 # ofrp directory
 export FOX_SETTINGS_ROOT_DIRECTORY="/persist"
-export FOX_MISCELLANEOUS_ROOT_DIRECTORY="/data/media/0"
+export FOX_MISCELLANEOUS_ROOT_DIRECTORY="/sdcard"
 export OF_QUICK_BACKUP_LIST="/nvram;/nvdata;/nvcfg;/protect_f;/protect_s;/proinfo;/oppo_custom;/md1img;"
 export FOX_RECOVERY_SYSTEM_PARTITION="/dev/block/mapper/system"
 export FOX_RECOVERY_VENDOR_PARTITION="/dev/block/mapper/vendor"
