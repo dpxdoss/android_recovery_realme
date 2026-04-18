@@ -104,7 +104,7 @@ export FOX_USE_LZ4_BINARY=1
 export FOX_USE_XZ_UTILS=1
 
 # ofrp maintainer
-export OF_MAINTAINER="dantepaulxd"
+export OF_MAINTAINER="Dante"
 export FOX_BUILD_TYPE="Beta"
 
 # ofrp logging
