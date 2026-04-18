@@ -70,8 +70,8 @@ export OF_OPTIONS_LIST_NUM=8
 export OF_DEFAULT_TIMEZONE="GMT-5:30"
 
 # ofrp directory
-export FOX_SETTINGS_ROOT_DIRECTORY=/persist
-export FOX_MISCELLANEOUS_ROOT_DIRECTORY=/sdcard
+export FOX_SETTINGS_ROOT_DIRECTORY="/persist"
+export FOX_MISCELLANEOUS_ROOT_DIRECTORY="/sdcard"
 export OF_QUICK_BACKUP_LIST="/nvram;/nvdata;/nvcfg;/protect_f;/protect_s;/proinfo;/oppo_custom;/md1img;"
 export FOX_RECOVERY_SYSTEM_PARTITION="/dev/block/mapper/system"
 export FOX_RECOVERY_VENDOR_PARTITION="/dev/block/mapper/vendor"
