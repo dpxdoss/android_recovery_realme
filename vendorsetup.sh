@@ -18,7 +18,7 @@
 # 	Please maintain this if you use this script or any part of it
 #
 FDEVICE="RMX2020"
-
+  
 fox_get_target_device() {
 local chkdev=$(echo "$BASH_SOURCE" | grep \"$FDEVICE\")
    if [ -n "$chkdev" ]; then
@@ -34,10 +34,12 @@ if [ -z "$1" -a -z "$FOX_BUILD_DEVICE" ]; then
 fi
 
 # ofrp device
+export FOX_BUILD_DEVICE=RMX2020
 export TARGET_DEVICE_ALT="RMX2020,RMX2027"
 export FOX_TARGET_DEVICES="$TARGET_DEVICE_ALT"
 
 # ofrp settings
+export LC_ALL="C"
 export ALLOW_MISSING_DEPENDENCIES=true
 export FOX_ALLOW_EARLY_SETTINGS_LOAD=1
 export OF_FLASHLIGHT_ENABLE=0
