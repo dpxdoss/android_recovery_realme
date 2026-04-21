@@ -11,7 +11,7 @@
 	</details>
 	
 	<resources>
-		<image name="splash_logo_o" filename="Splash/logo_o" retainaspect="1"/>
+		<image name="splash_logo_o" filename="Splash/logo_w" retainaspect="1"/>
 		<image name="splash_bg" filename="Splash/empty" retainaspect="1"/>
 		<font name="of" filename="GoogleSans-Medium.ttf" size="64"/>
 		<font name="recovery" filename="GoogleSans-Regular.ttf" size="52"/>
@@ -46,13 +46,13 @@
 
 			<text style="menu_text">
 				<placement x="540" y="%of%" placement="4"/>
-				<font resource="of" color="#fd891c"/>
+				<font resource="of" color="#ffffff"/>
 				<text>OrangeFox Recovery</text>
 			</text>
 
 			<text style="menu_text">
 				<placement x="540" y="%rec%" placement="4"/>
-				<font resource="recovery" color="#fd891c"/>
+				<font resource="recovery" color="#ffffff"/>
 				<text>by Dante @dantepaulxd</text>
 			</text>
 		</page>
