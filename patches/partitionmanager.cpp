@@ -2967,80 +2967,76 @@ void TWPartitionManager::Get_Partition_List(string ListType,
 				end_pos = Restore_List.find(";", start_pos);
 			}
 		}
-	} else if (ListType == "wipe") {
-		struct PartitionList dalvik;
-		dalvik.Display_Name = gui_parse_text("{@dalvik}");
-		dalvik.Mount_Point = "DALVIK";
-		dalvik.selected = 0;
-		Partition_List->push_back(dalvik);
-		for (iter = Partitions.begin(); iter != Partitions.end(); iter++) {
-			if ((*iter)->Wipe_Available_in_GUI && !(*iter)->Is_SubPartition) {
-				struct PartitionList part;
-				part.Display_Name = (*iter)->Display_Name;
-				part.Mount_Point = (*iter)->Mount_Point;
-				part.selected = 0;
-				Partition_List->push_back(part);
-			}
-			if ((*iter)->Has_Android_Secure) {
-				struct PartitionList part;
-				part.Display_Name = (*iter)->Backup_Display_Name;
-				part.Mount_Point = (*iter)->Backup_Path;
-				part.selected = 0;
-				Partition_List->push_back(part);
-			}
-			if ((*iter)->Has_Data_Media) {
-				struct PartitionList datamedia;
-				datamedia.Display_Name = (*iter)->Storage_Name;
-				datamedia.Mount_Point = "INTERNAL";
-				datamedia.selected = 0;
-				Partition_List->push_back(datamedia);
-			}
-		}
-    // Push removable storage to bottom to prevent accidental wipes
-    std::stable_partition(Partition_List->begin(), Partition_List->end(),
-        [&](const PartitionList& p) {
-            TWPartition* part = Find_Partition_By_Path(p.Mount_Point);
-            return !(part && part->Removable);
+} else if (ListType == "wipe") {
+        struct PartitionList dalvik;
+        dalvik.Display_Name = gui_parse_text("{@dalvik}");
+        dalvik.Mount_Point = "DALVIK";
+        dalvik.selected = 0;
+        Partition_List->push_back(dalvik);
+
+        for (iter = Partitions.begin(); iter != Partitions.end(); iter++) {
+            if ((*iter)->Wipe_Available_in_GUI && !(*iter)->Is_SubPartition) {
+                struct PartitionList part;
+                part.Display_Name = (*iter)->Display_Name;
+                part.Mount_Point = (*iter)->Mount_Point;
+                part.selected = 0;
+                Partition_List->push_back(part);
+            }
+            if ((*iter)->Has_Android_Secure) {
+                struct PartitionList part;
+                part.Display_Name = (*iter)->Backup_Display_Name;
+                part.Mount_Point = (*iter)->Backup_Path;
+                part.selected = 0;
+                Partition_List->push_back(part);
+            }
+            if ((*iter)->Has_Data_Media) {
+                struct PartitionList datamedia;
+                datamedia.Display_Name = (*iter)->Storage_Name;
+                datamedia.Mount_Point = "INTERNAL";
+                datamedia.selected = 0;
+                Partition_List->push_back(datamedia);
+            }
         }
-    );
-}
-	} else if (ListType == "flashimg") {
-		for (iter = Partitions.begin(); iter != Partitions.end(); iter++) {
-			if ((*iter)->Can_Flash_Img && (*iter)->Is_Present) {
-				struct PartitionList part;
-				part.Display_Name = (*iter)->Backup_Display_Name;
-				part.Mount_Point = (*iter)->Backup_Path;
-				part.selected = 0;
-				Partition_List->push_back(part);
-			}
 
-		if (DataManager::GetIntValue("tw_has_repack_tools") != 0 && DataManager::GetIntValue("tw_has_boot_slots") != 0 && DataManager::GetIntValue("tw_include_install_recovery_ramdisk") != 0) {
-			std::string dest_partition = "/boot";
-			#if defined(BOARD_MOVE_RECOVERY_RESOURCES_TO_VENDOR_BOOT) || defined(FOX_VENDOR_BOOT_RECOVERY)
-				dest_partition = "/vendor_boot";
-			#elif defined(OF_AB_DEVICE_WITH_RECOVERY_PARTITION)
-				dest_partition = "/recovery";
-			#endif
+        // Push removable storage to bottom
+        std::stable_partition(Partition_List->begin(), Partition_List->end(),
+            [&](const PartitionList& p) {
+                TWPartition* part = Find_Partition_By_Path(p.Mount_Point);
+                return !(part && part->Removable);
+            }
+        );
+    } else if (ListType == "flashimg") {
+        for (iter = Partitions.begin(); iter != Partitions.end(); iter++) {
+            if ((*iter)->Can_Flash_Img && (*iter)->Is_Present) {
+                struct PartitionList part;
+                part.Display_Name = (*iter)->Backup_Display_Name;
+                part.Mount_Point = (*iter)->Backup_Path;
+                part.selected = 0;
+                Partition_List->push_back(part);
+            }
+        }
 
-			TWPartition* boot = Find_Partition_By_Path(dest_partition);
-			if (boot) {
-				// Allow flashing kernels and ramdisks
-				struct PartitionList repack_ramdisk;
-				repack_ramdisk.Display_Name = gui_lookup("install_twrp_ramdisk", "Install Recovery Ramdisk");
-				repack_ramdisk.Mount_Point = "/repack_ramdisk";
-				repack_ramdisk.selected = 0;
-				Partition_List->push_back(repack_ramdisk);
-				LOGINFO("Install Recovery Ramdisk: target partition=%s\n", dest_partition.c_str());
-				/*struct PartitionList repack_kernel; For now let's leave repacking kernels under advanced only
-				repack_kernel.Display_Name = gui_lookup("install_kernel", "Install Kernel");
-				repack_kernel.Mount_Point = "/repack_kernel";
-				repack_kernel.selected = 0;
-				Partition_List->push_back(repack_kernel);*/
-			}
-		}
-	} else {
-		LOGERR("Unknown list type '%s' requested for TWPartitionManager::Get_Partition_List\n", ListType.c_str());
-	}
+        if (DataManager::GetIntValue("tw_has_repack_tools") != 0 && DataManager::GetIntValue("tw_has_boot_slots") != 0 && DataManager::GetIntValue("tw_include_install_recovery_ramdisk") != 0) {
+            std::string dest_partition = "/boot";
+            #if defined(BOARD_MOVE_RECOVERY_RESOURCES_TO_VENDOR_BOOT) || defined(FOX_VENDOR_BOOT_RECOVERY)
+                dest_partition = "/vendor_boot";
+            #elif defined(OF_AB_DEVICE_WITH_RECOVERY_PARTITION)
+                dest_partition = "/recovery";
+            #endif
+
+            TWPartition* boot = Find_Partition_By_Path(dest_partition);
+            if (boot) {
+                struct PartitionList repack_ramdisk;
+                repack_ramdisk.Display_Name = gui_lookup("install_twrp_ramdisk", "Install Recovery Ramdisk");
+                repack_ramdisk.Mount_Point = "/repack_ramdisk";
+                repack_ramdisk.selected = 0;
+                Partition_List->push_back(repack_ramdisk);
+                LOGINFO("Install Recovery Ramdisk: target partition=%s\n", dest_partition.c_str());
+            }
+        }
+    } else {
+        LOGERR("Unknown list type '%s' requested for TWPartitionManager::Get_Partition_List\n", ListType.c_str());
+    }
 }
 
 int TWPartitionManager::Fstab_Processed(void) {
