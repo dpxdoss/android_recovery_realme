@@ -3013,7 +3013,6 @@ void TWPartitionManager::Get_Partition_List(string ListType,
 				part.selected = 0;
 				Partition_List->push_back(part);
 			}
-		}
 
 		if (DataManager::GetIntValue("tw_has_repack_tools") != 0 && DataManager::GetIntValue("tw_has_boot_slots") != 0 && DataManager::GetIntValue("tw_include_install_recovery_ramdisk") != 0) {
 			std::string dest_partition = "/boot";
