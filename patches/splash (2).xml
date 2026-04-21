@@ -12,7 +12,7 @@
 		<#LOGO_ON#image name="splash_logo" filename="Splash/logo_#LOGO_TYPE#" retainaspect="1"/#LOGO_ON#>
 		<#BG_IMG#image name="splash_bg" filename="Splash/user" retainaspect="1"/#BG_IMG#>
 		<#SHOWOFR#font name="of" filename="EuclidFlex-Medium.ttf" size="64"/>
-		<font name="recovery" filename="EuclidFlex-Regular.ttf" size="52"/#SHOWOFR#>
+		<font name="recovery" filename="GoogleSans-Regular.ttf" size="52"/#SHOWOFR#>
 	</resources>
 
 	<#SHOWOFR#variables>
@@ -34,12 +34,12 @@
 			<#SHOWOFR#text style="menu_text">
 				<placement x="540" y="%of%" placement="4"/>
 				<font resource="of" color="##TCOLOR#"/>
-				<text>OrangeFox</text>
+				<text>OrangeFox Recovery</text>
 			</text>
 			<text style="menu_text">
 				<placement x="540" y="%rec%" placement="4"/>
 				<font resource="recovery" color="##TCOLOR#"/>
-				<text>Recovery</text>
+				<text>by Dante @dantepaulxd</text>
 			</text#SHOWOFR#>
 		</page>
 	</pages>
