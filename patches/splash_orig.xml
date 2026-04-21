@@ -2,6 +2,7 @@
 <!-- 
 	OrangeFox Splash by OrangeFox Team
     Background logo idea by KMP design
+	Modded by Dante aka @dantepaulxd
 -->
 <recovery>
 	<details>
@@ -10,10 +11,10 @@
 	</details>
 	
 	<resources>
-		<image name="splash_logo_w" filename="Splash/logo_w" retainaspect="1"/>
-		<image name="splash_bg" filename="Splash/original" retainaspect="1"/>
-		<font name="of" filename="EuclidFlex-Medium.ttf" size="64"/>
-		<font name="recovery" filename="EuclidFlex-Regular.ttf" size="52"/>
+		<image name="splash_logo_o" filename="Splash/logo_o" retainaspect="1"/>
+		<image name="splash_bg" filename="Splash/empty" retainaspect="1"/>
+		<font name="of" filename="GoogleSans-Medium.ttf" size="64"/>
+		<font name="recovery" filename="GoogleSans-Regular.ttf" size="52"/>
 	</resources>
 
 	<variables>
@@ -23,8 +24,8 @@
 
 	<pages>
 		<page name="splash">
-			<background color="#D34E38"/>
-			<fill color="#FF8038">
+			<background color="#000000"/>
+			<fill color="#000000">
 				<placement x="0" y="0" w="1080" h="%center_y%"/>
 			</fill>
 			<image>
@@ -38,13 +39,13 @@
 
 			<text style="menu_text">
 				<placement x="540" y="%of%" placement="4"/>
-				<font resource="of" color="#ffffff"/>
-				<text>OrangeFox</text>
+				<font resource="of" color="#fd891c"/>
+				<text>OrangeFox Recovery</text>
 			</text>
 			<text style="menu_text">
 				<placement x="540" y="%rec%" placement="4"/>
-				<font resource="recovery" color="#ffffff"/>
-				<text>Recovery</text>
+				<font resource="recovery" color="#fd891c"/>
+				<text>by Dante @dantepaulxd</text>
 			</text>
 		</page>
 	</pages>
