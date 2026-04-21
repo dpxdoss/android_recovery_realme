@@ -2996,6 +2996,14 @@ void TWPartitionManager::Get_Partition_List(string ListType,
 				Partition_List->push_back(datamedia);
 			}
 		}
+    // Push removable storage to bottom to prevent accidental wipes
+    std::stable_partition(Partition_List->begin(), Partition_List->end(),
+        [&](const PartitionList& p) {
+            TWPartition* part = Find_Partition_By_Path(p.Mount_Point);
+            return !(part && part->Removable);
+        }
+    );
+}
 	} else if (ListType == "flashimg") {
 		for (iter = Partitions.begin(); iter != Partitions.end(); iter++) {
 			if ((*iter)->Can_Flash_Img && (*iter)->Is_Present) {
