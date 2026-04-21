@@ -111,14 +111,4 @@ else
         echo "I: This script requires bash. Not processing the $FDEVICE $(basename "$0")"
     fi
 fi
-
-# source patch script
-export FOX_CUSTOM_PATCHES=true
-
-if [ "$FOX_CUSTOM_PATCHES" = "true" ]; then
-    echo "Custom patches will be applied to the source tree."
-    bash "$HOME/fox_12.1/device/realme/RMX2020/patches/patchsetup.sh"
-else
-    echo "Custom patches will not be applied to the source tree."
-fi
 # end
