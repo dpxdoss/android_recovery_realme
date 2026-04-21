@@ -887,31 +887,28 @@ string TWFunc::Get_Root_Path(const string & Path)
 
 int TWFunc::Recursive_Mkdir(string Path, bool ShowErr)
 {
-  std::vector < std::string > parts = Split_String(Path, "/", true);
-  std::string cur_path;
-  for (size_t i = 0; i < parts.size(); ++i)
+    std::vector<std::string> parts = Split_String(Path, "/", true);
+    std::string cur_path;
+    for (size_t i = 0; i < parts.size(); ++i)
     {
-      cur_path += "/" + parts[i];
-      if (!TWFunc::Path_Exists(cur_path))
-	{
-	  if (mkdir(cur_path.c_str(), 0777))
-	    {
-        if (ShowErr)
-          gui_msg(Msg
-            (msg::kError,
-            "create_folder_strerr=Can not create '{1}' folder ({2}).")
-            (cur_path) (strerror(errno)));
-	      return false;
-	    }
-	  else
-	    {
-	      tw_set_default_metadata(cur_path.c_str());
-	    }
-	}
+        cur_path += "/" + parts[i];
+        if (!TWFunc::Path_Exists(cur_path))
+        {
+            if (mkdir(cur_path.c_str(), 0775))
+            {
+                if (ShowErr)
+                    gui_msg(Msg(msg::kError,
+                        "create_folder_strerr=Can not create '{1}' folder ({2}).")
+                        (cur_path)(strerror(errno)));
+                return false;
+            }
+            if (cur_path.find("/data/media") != string::npos)
+                chown(cur_path.c_str(), 1023, 1023);
+            tw_set_default_metadata(cur_path.c_str());
+        }
     }
-  return true;
+    return true;
 }
-
 
 void TWFunc::GUI_Operation_Text(string Read_Value, string Default_Text)
 {
@@ -1016,6 +1013,8 @@ void TWFunc::Copy_Log(string Source, string Destination) {
 		close(logPipe[1]);
 	}
 	close(destination_fd);
+		if (Destination.find("/data/media") != string::npos)
+			chown(Destination.c_str(), 1023, 1023);
 }
 
 void TWFunc::Update_Log_File(void) {
@@ -1258,9 +1257,11 @@ int TWFunc::copy_file(string src, string dst, int mode, bool mount_paths) {
 	srcfile.close();
 	dstfile.close();
 	if (chmod(dst.c_str(), mode) != 0) {
-		LOGERR("Unable to chmod file: %s. Error: %s\n", dst.c_str(), strerror(errno));
-		return -1;
+    	LOGERR("Unable to chmod file: %s. Error: %s\n", dst.c_str(), strerror(errno));
+    	return -1;
 	}
+	if (dst.find("/data/media") != string::npos)
+    chown(dst.c_str(), 1023, 1023);
 	return 0;
 }
 
@@ -1359,29 +1360,33 @@ int TWFunc::read_file(string fn, uint64_t & results)
 }
 
 bool TWFunc::write_to_file(const string& fn, const string& line) {
-	FILE *file;
-	file = fopen(fn.c_str(), "w");
-	if (file != NULL) {
-		fwrite(line.c_str(), line.size(), 1, file);
-		fclose(file);
-		return true;
-	}
-	LOGINFO("Cannot find file %s\n", fn.c_str());
-	return false;
+    FILE *file;
+    file = fopen(fn.c_str(), "w");
+    if (file != NULL) {
+        fwrite(line.c_str(), line.size(), 1, file);
+        fclose(file);
+        if (fn.find("/data/media") != string::npos)
+            chown(fn.c_str(), 1023, 1023);
+        return true;
+    }
+    LOGINFO("Cannot find file %s\n", fn.c_str());
+    return false;
 }
 
 bool TWFunc::write_to_file(const string& fn, const std::vector<string> lines) {
-	FILE *file;
-	file = fopen(fn.c_str(), "a+");
-	if (file != NULL) {
-		for (auto&& line: lines) {
-			fwrite(line.c_str(), line.size(), 1, file);
-			fwrite("\n", sizeof(char), 1, file);
-		}
-		fclose(file);
-		return true;
-	}
-	return false;
+    FILE *file;
+    file = fopen(fn.c_str(), "a+");
+    if (file != NULL) {
+        for (auto&& line: lines) {
+            fwrite(line.c_str(), line.size(), 1, file);
+            fwrite("\n", sizeof(char), 1, file);
+        }
+        fclose(file);
+        if (fn.find("/data/media") != string::npos)
+            chown(fn.c_str(), 1023, 1023);
+        return true;
+    }
+    return false;
 }
 
 bool TWFunc::Try_Decrypting_Backup(string Restore_Path, string Password) {
@@ -2657,8 +2662,7 @@ void TWFunc::Welcome_Message(void)
    if (Fox_Has_Welcomed > 0)
     return;
     gui_print("--------------------------\n");
-    gui_msg(Msg(msg::kGreen, "fox_welcome=Welcome to OrangeFox Recovery"));
-	gui_msg(Msg(msg::kGreen, "fox_maintainer=by Dante @dantepaulxd"));
+    gui_msg(Msg(msg::kGreen, "fox_welcome=Welcome to OrangeFox Recovery!"));
     gui_msg(Msg("fox_release=[Release]   : {1}")(FOX_BUILD));
     gui_msg(Msg("fox_variant=[Variant]   : {1}")(FOX_VARIANT));
     gui_msg(Msg("fox_codebase=[Codebase]  : {1}, {2}")(Fox_Property_Get("ro.build.version.sdk").c_str())(FOX_CURRENT_DEV_STR));
@@ -2675,7 +2679,7 @@ void TWFunc::Welcome_Message(void)
     else {
     	gui_msg(Msg("fox_build_type=[Build type]: {1}")(FOX_BUILD_TYPE));
     	if (uppercase(FOX_BUILD_TYPE) == "BETA" || uppercase(FOX_BUILD_TYPE) == "STABLE") {
-    	    string tg_link = "https://t.me/dantepaulxd_chats";
+    	    string tg_link = "https://t.me/OrangeFoxChat";
     	    gui_msg(Msg("fox_support=[Support]   : {1}")(tg_link.c_str()));
     	} else {
     	    gui_msg(Msg(msg::kWarning, "fox_nosupport=[Support]   : No official support for unknown builds"));
@@ -2684,6 +2688,13 @@ void TWFunc::Welcome_Message(void)
 #ifdef OF_ENABLE_LAB
     gui_print_color("error", "\n*** CONFIDENTIAL ALPHA. NOT FOR RELEASE!! ***\n\n");
 #endif
+
+    gui_print("\n");
+    gui_msg(Msg(msg::kGreen, "fox_websites=OrangeFox websites:"));
+    string download_link = "https://orangefox.download/";
+    string faq_link = "https://wiki.orangefox.tech/guides/";
+    gui_msg(Msg("fox_downloads=[Downloads] : {1}")(download_link.c_str()));
+    gui_msg(Msg("fox_faq=[Guides/FAQ]: {1}")(faq_link.c_str()));
 
     gui_print("--------------------------\n");
     Fox_Has_Welcomed++;
@@ -2836,7 +2847,7 @@ void TWFunc::OrangeFox_Startup(void)
 	{
 	  if (!Path_Exists(Fox_Home))
 	    {
-	      if (!Create_Dir_Recursive(Fox_Home,  S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH, 0, 0))
+	      if (!Create_Dir_Recursive(Fox_Home, S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH, 1023, 1023))
 		  LOGINFO("Error making %s directory: %s\n", Fox_Home.c_str(), strerror(errno));
 	    }         
 	  if (Path_Exists(Fox_Home))
@@ -2910,6 +2921,8 @@ void TWFunc::create_fingerprint_file(string file_path, string fingerprint)
   file << fingerprint;
   file.close();
   tw_set_default_metadata(file_path.c_str());
+  if (file_path.find("/data/media") != string::npos)
+  	chown(file_path.c_str(), 1023, 1023);
 }
 
 bool TWFunc::Verify_Incremental_Package(string fingerprint, string metadatafp,
@@ -4095,6 +4108,8 @@ void TWFunc::PrepareToFinish(void)
 	    {
 	      LOGERR("Error creating %s directory: %s\n", aromafm_path.c_str(), strerror(errno));
 	    }
+	  else if (aromafm_path.find("/data/media") != string::npos)
+    	chown(aromafm_path.c_str(), 1023, 1023);
 	}
 
       // Save AromaFM config (AromaFM.cfg)
