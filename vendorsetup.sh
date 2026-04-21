@@ -93,7 +93,7 @@ export FOX_USE_XZ_UTILS=1
 
 # ofrp maintainer
 export OF_MAINTAINER="Dante"
-export FOX_BUILD_TYPE="Beta"
+export FOX_BUILD_TYPE="Custom"
 
 # ofrp logging
 export OF_DISPLAY_FORMAT_FILESYSTEMS_DEBUG_INFO=1
