@@ -99,4 +99,26 @@ export FOX_BUILD_TYPE="Beta"
 export OF_DISPLAY_FORMAT_FILESYSTEMS_DEBUG_INFO=1
 export OF_DONT_KEEP_LOG_HISTORY=1
 
+if [ "$1" = "$FDEVICE" -o "$FOX_BUILD_DEVICE" = "$FDEVICE" ]; then
+    if [ -n "$FOX_BUILD_LOG_FILE" -a -f "$FOX_BUILD_LOG_FILE" ]; then
+         export | grep "FOX" >> "$FOX_BUILD_LOG_FILE"
+         export | grep "OF_" >> "$FOX_BUILD_LOG_FILE"
+         export | grep "TARGET_" >> "$FOX_BUILD_LOG_FILE"
+         export | grep "TW_" >> "$FOX_BUILD_LOG_FILE"
+     fi
+else
+    if [ -z "$FOX_BUILD_DEVICE" -a -z "$BASH_SOURCE" ]; then
+        echo "I: This script requires bash. Not processing the $FDEVICE $(basename "$0")"
+    fi
+fi
+
+# source patch script
+export FOX_CUSTOM_PATCHES=true
+
+if [ "$FOX_CUSTOM_PATCHES" = "true" ]; then
+    echo "Custom patches will be applied to the source tree."
+    bash "$HOME/fox_12.1/device/realme/RMX2020/patches/patchsetup.sh"
+else
+    echo "Custom patches will not be applied to the source tree."
+fi
 # end
