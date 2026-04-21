@@ -17,24 +17,10 @@
 #
 # 	Please maintain this if you use this script or any part of it
 #
-FDEVICE="RMX2020"
-  
-fox_get_target_device() {
-local chkdev=$(echo "$BASH_SOURCE" | grep \"$FDEVICE\")
-   if [ -n "$chkdev" ]; then
-      FOX_BUILD_DEVICE="$FDEVICE"
-   else
-      chkdev=$(set | grep BASH_ARGV | grep \"$FDEVICE\")
-      [ -n "$chkdev" ] && FOX_BUILD_DEVICE="$FDEVICE"
-   fi
-}
-
-if [ -z "$1" -a -z "$FOX_BUILD_DEVICE" ]; then
-   fox_get_target_device
-fi
 
 # ofrp device
-export FOX_BUILD_DEVICE=RMX2020
+FDEVICE="RMX2020"
+export FOX_BUILD_DEVICE="$FDEVICE"
 export TARGET_DEVICE_ALT="RMX2020,RMX2027"
 export FOX_TARGET_DEVICES="$TARGET_DEVICE_ALT"
 
@@ -113,16 +99,4 @@ export FOX_BUILD_TYPE="Beta"
 export OF_DISPLAY_FORMAT_FILESYSTEMS_DEBUG_INFO=1
 export OF_DONT_KEEP_LOG_HISTORY=1
 
-if [ "$1" = "$FDEVICE" -o "$FOX_BUILD_DEVICE" = "$FDEVICE" ]; then
-    if [ -n "$FOX_BUILD_LOG_FILE" -a -f "$FOX_BUILD_LOG_FILE" ]; then
-         export | grep "FOX" >> "$FOX_BUILD_LOG_FILE"
-         export | grep "OF_" >> "$FOX_BUILD_LOG_FILE"
-         export | grep "TARGET_" >> "$FOX_BUILD_LOG_FILE"
-         export | grep "TW_" >> "$FOX_BUILD_LOG_FILE"
-     fi
-else
-    if [ -z "$FOX_BUILD_DEVICE" -a -z "$BASH_SOURCE" ]; then
-        echo "I: This script requires bash. Not processing the $FDEVICE $(basename "$0")"
-    fi
-fi
 # end
