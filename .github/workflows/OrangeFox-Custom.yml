@@ -39,11 +39,10 @@ jobs:
     runs-on: ubuntu-22.04
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      ORANGEFOX_PATH: /opt/fox_12.1  # ← Use absolute path OUTSIDE workspace
     permissions:
       contents: write
     steps:
-    # REMOVED the checkout action - we'll clone device tree fresh into fox_12.1
-              
     - name: Clean-up
       uses: rokibhasansagar/slimhub_actions@main
     
@@ -61,17 +60,17 @@ jobs:
       
     - name: Set-up Manifest
       run: |
-        mkdir -p ${GITHUB_WORKSPACE}/OrangeFox_sync
-        cd ${GITHUB_WORKSPACE}/OrangeFox_sync
+        mkdir -p ~/OrangeFox_sync
+        cd ~/OrangeFox_sync
         git config --global user.name "${{ github.actor }}"
         git config --global user.email "${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com"
         git clone https://gitlab.com/OrangeFox/sync.git
-        cd ${GITHUB_WORKSPACE}/OrangeFox_sync/sync/
-        ./orangefox_sync.sh --branch 12.1 --path ${GITHUB_WORKSPACE}/fox_12.1
+        cd ~/OrangeFox_sync/sync/
+        ./orangefox_sync.sh --branch 12.1 --path ${{ env.ORANGEFOX_PATH }}
         
     - name: Clone Device Tree
       run: |
-        cd ${GITHUB_WORKSPACE}/fox_12.1
+        cd ${{ env.ORANGEFOX_PATH }}
         git clone ${{ inputs.DEVICE_TREE }} -b ${{ inputs.DEVICE_TREE_BRANCH }} ./${{ inputs.DEVICE_PATH }}
         cd ${{ inputs.DEVICE_PATH }}
         echo "COMMIT_ID=$(git rev-parse HEAD)" >> $GITHUB_ENV
@@ -79,18 +78,18 @@ jobs:
     - name: Apply Custom Patches
       run: |
         export DEVICE_PATH=${{ inputs.DEVICE_PATH }}
-        bash ${GITHUB_WORKSPACE}/fox_12.1/${{ inputs.DEVICE_PATH }}/patches/patchsetup.sh
+        bash ${{ env.ORANGEFOX_PATH }}/${{ inputs.DEVICE_PATH }}/patches/patchsetup.sh
     
     - name: Building OrangeFox
       run: |
-        cd ${GITHUB_WORKSPACE}/fox_12.1
+        cd ${{ env.ORANGEFOX_PATH }}
         source build/envsetup.sh
         lunch twrp_${{ inputs.DEVICE_NAME }}-eng && make clean && mka adbd ${{ inputs.BUILD_TARGET }}image
     
     - name: Set Release Properties
       run: |
         echo "BUILD_DATE=$(TZ=Asia/Manila date +%Y%m%d)" >> $GITHUB_ENV
-        cd ${GITHUB_WORKSPACE}/fox_12.1
+        cd ${{ env.ORANGEFOX_PATH }}
         DEVICE_TREE_URL="${{ inputs.DEVICE_TREE }}"
         if [[ "${DEVICE_TREE_URL}" == *.git ]]; then
           DEVICE_TREE_URL="${DEVICE_TREE_URL%.git}"
@@ -101,8 +100,8 @@ jobs:
       uses: softprops/action-gh-release@v2
       with:
         files: |
-          fox_12.1/out/target/product/${{ inputs.DEVICE_NAME }}/OrangeFox*.img
-          fox_12.1/out/target/product/${{ inputs.DEVICE_NAME }}/OrangeFox*.zip
+          /opt/fox_12.1/out/target/product/${{ inputs.DEVICE_NAME }}/OrangeFox*.img
+          /opt/fox_12.1/out/target/product/${{ inputs.DEVICE_NAME }}/OrangeFox*.zip
         name: OrangeFox Recovery for ${{ inputs.DEVICE_NAME }} // ${{ env.BUILD_DATE }}
         tag_name: ${{ github.run_id }}
         body: |
