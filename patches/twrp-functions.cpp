@@ -2658,7 +2658,6 @@ void TWFunc::Welcome_Message(void)
     return;
     gui_print("--------------------------\n");
     gui_msg(Msg(msg::kGreen, "fox_welcome=Welcome to OrangeFox Recovery!"));
-	gui_msg(Msg(msg::kGreen, "fox_welcome=custom build! by Dante @dantepaulxd"));
     gui_msg(Msg("fox_release=[Release]   : {1}")(FOX_BUILD));
     gui_msg(Msg("fox_variant=[Variant]   : {1}")(FOX_VARIANT));
     gui_msg(Msg("fox_codebase=[Codebase]  : {1}, {2}")(Fox_Property_Get("ro.build.version.sdk").c_str())(FOX_CURRENT_DEV_STR));
