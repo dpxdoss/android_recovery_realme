@@ -76,8 +76,10 @@ jobs:
         echo "COMMIT_ID=$(git rev-parse HEAD)" >> $GITHUB_ENV
     
     - name: Apply Custom Patches
+      env:
+          DEVICE_PATH: ${{ inputs.DEVICE_PATH }}
+          ORANGEFOX_PATH: ${{ env.ORANGEFOX_PATH }}
       run: |
-        export DEVICE_PATH=${{ inputs.DEVICE_PATH }}
         bash ${{ env.ORANGEFOX_PATH }}/${{ inputs.DEVICE_PATH }}/patches/patchsetup.sh
     
     - name: Building OrangeFox
