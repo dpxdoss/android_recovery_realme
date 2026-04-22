@@ -58,8 +58,8 @@ export OF_OPTIONS_LIST_NUM=8
 export OF_DEFAULT_TIMEZONE="GMT-5:30"
 
 # ofrp directory
-export FOX_SETTINGS_ROOT_DIRECTORY="/persist/Recovery"
-export FOX_MISCELLANEOUS_ROOT_DIRECTORY="/sdcard/Download"
+export FOX_SETTINGS_ROOT_DIRECTORY=/persist
+export FOX_MISCELLANEOUS_ROOT_DIRECTORY=/sdcard
 export OF_QUICK_BACKUP_LIST="/nvram;/nvdata;/nvcfg;/protect_f;/protect_s;/proinfo;/oppo_custom;/md1img;"
 export FOX_RECOVERY_SYSTEM_PARTITION="/dev/block/mapper/system"
 export FOX_RECOVERY_VENDOR_PARTITION="/dev/block/mapper/vendor"
@@ -93,22 +93,10 @@ export FOX_USE_XZ_UTILS=1
 
 # ofrp maintainer
 export OF_MAINTAINER="Dante"
-export FOX_BUILD_TYPE="Custom"
+export FOX_BUILD_TYPE="Beta"
 
 # ofrp logging
 export OF_DISPLAY_FORMAT_FILESYSTEMS_DEBUG_INFO=1
 export OF_DONT_KEEP_LOG_HISTORY=1
 
-if [ "$1" = "$FDEVICE" -o "$FOX_BUILD_DEVICE" = "$FDEVICE" ]; then
-    if [ -n "$FOX_BUILD_LOG_FILE" -a -f "$FOX_BUILD_LOG_FILE" ]; then
-         export | grep "FOX" >> "$FOX_BUILD_LOG_FILE"
-         export | grep "OF_" >> "$FOX_BUILD_LOG_FILE"
-         export | grep "TARGET_" >> "$FOX_BUILD_LOG_FILE"
-         export | grep "TW_" >> "$FOX_BUILD_LOG_FILE"
-     fi
-else
-    if [ -z "$FOX_BUILD_DEVICE" -a -z "$BASH_SOURCE" ]; then
-        echo "I: This script requires bash. Not processing the $FDEVICE $(basename "$0")"
-    fi
-fi
 # end
