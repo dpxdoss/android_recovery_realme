@@ -1,12 +1,23 @@
+#!/bin/bash
 # Custom patch script - OrangeFox
 # by: @dantepaulxd (2026)
-
 set -e  # stop on error
 
 echo "== OrangeFox Custom Patch Script =="
 
-PATCHES_DIR="$GITHUB_WORKSPACE/fox_12.1/${DEVICE_PATH}/patches"
-SOURCE_DIR="$GITHUB_WORKSPACE/fox_12.1/bootable/recovery"
+# Use ORANGEFOX_PATH environment variable, or fallback to /opt/fox_12.1
+ORANGEFOX_PATH="${ORANGEFOX_PATH:-/opt/fox_12.1}"
+
+# Get the DEVICE_PATH from environment or use as argument
+DEVICE_PATH="${DEVICE_PATH:-$1}"
+
+if [ -z "$DEVICE_PATH" ]; then
+    echo " Error: DEVICE_PATH not set and no argument provided"
+    exit 1
+fi
+
+PATCHES_DIR="$ORANGEFOX_PATH/${DEVICE_PATH}/patches"
+SOURCE_DIR="$ORANGEFOX_PATH/bootable/recovery"
 
 # --- Safety checks ---
 if [ ! -d "$PATCHES_DIR" ]; then
@@ -23,27 +34,22 @@ echo " Patch dir: $PATCHES_DIR"
 echo " Source dir: $SOURCE_DIR"
 
 # --- Helper function ---
-
 copy_patch() {
     local src="$1"
     local dest="$2"
-
     if [ ! -f "$src" ]; then
         echo " Missing patch file: $src"
         exit 1
     fi
-
     if [ ! -d "$(dirname "$dest")" ]; then
         echo " Destination path missing: $(dirname "$dest")"
         exit 1
     fi
-
     echo "→ Patching: $(basename "$src")"
     cp -f "$src" "$dest"
 }
 
 # --- Apply patches ---
-
 copy_patch "$PATCHES_DIR/maintainer.png" \
 "$SOURCE_DIR/gui/theme/portrait_hdpi/images/Default/About/maintainer.png"
 
