@@ -69,7 +69,7 @@ jobs:
         git config --global user.name "${{ github.actor }}"
         git config --global user.email "${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com"
         git clone https://gitlab.com/OrangeFox/sync.git
-        cd ${GITHUB_WORKSPACE}~/OrangeFox_sync/sync/
+        cd ${GITHUB_WORKSPACE}/OrangeFox_sync/sync/
         ./orangefox_sync.sh --branch 12.1 --path ${GITHUB_WORKSPACE}/fox_12.1
         
     - name: Clone Device Tree
@@ -77,11 +77,12 @@ jobs:
         cd ${GITHUB_WORKSPACE}/fox_12.1
         git clone ${{ inputs.DEVICE_TREE }} -b ${{ inputs.DEVICE_TREE_BRANCH }} ./${{ inputs.DEVICE_PATH }}
         cd ${{ inputs.DEVICE_PATH }}
+        echo "COMMIT_ID=$(git rev-parse HEAD)" >> $GITHUB_ENV
 
     - name: Apply Custom Patches
       run: |
         export DEVICE_PATH=${{ inputs.DEVICE_PATH }}
-        bash ${GITHUB_WORKSPACE}/OrangeFox_sync/fox_12.1/${{ inputs.DEVICE_PATH }}/patches/patchsetup.sh
+        bash ${GITHUB_WORKSPACE}/fox_12.1/${{ inputs.DEVICE_PATH }}/patches/patchsetup.sh
 
     - name: Building OrangeFox
       run: |
@@ -92,7 +93,7 @@ jobs:
     - name: Set Release Properties
       run: |
         echo "BUILD_DATE=$(TZ=Asia/Manila date +%Y%m%d)" >> $GITHUB_ENV
-        cd ${GITHUB_WORKSPACE}/OrangeFox_sync/fox_12.1
+        cd ${GITHUB_WORKSPACE}/fox_12.1
 
         DEVICE_TREE_URL="${{ inputs.DEVICE_TREE }}"
         if [[ "${DEVICE_TREE_URL}" == *.git ]]; then
@@ -104,8 +105,8 @@ jobs:
       uses: softprops/action-gh-release@v2
       with:
         files: |
-          OrangeFox/fox_12.1/out/target/product/${{ inputs.DEVICE_NAME }}/OrangeFox*.img
-          OrangeFox/fox_12.1/out/target/product/${{ inputs.DEVICE_NAME }}/OrangeFox*.zip
+          fox_12.1/out/target/product/${{ inputs.DEVICE_NAME }}/OrangeFox*.img
+          fox_12.1/out/target/product/${{ inputs.DEVICE_NAME }}/OrangeFox*.zip
         name: OrangeFox Recovery for ${{ inputs.DEVICE_NAME }} // ${{ env.BUILD_DATE }}
         tag_name: ${{ github.run_id }}
         body: |
