@@ -5,8 +5,8 @@ set -e  # stop on error
 
 echo "== OrangeFox Custom Patch Script =="
 
-PATCHES_DIR="$GITHUB_WORKSPACE/OrangeFox/fox_${MANIFEST_BRANCH}/${DEVICE_PATH}/patches"
-SOURCE_DIR="$GITHUB_WORKSPACE/OrangeFox/fox_${MANIFEST_BRANCH}/bootable/recovery"
+PATCHES_DIR="$GITHUB_WORKSPACE/fox_12.1/${DEVICE_PATH}/patches"
+SOURCE_DIR="$GITHUB_WORKSPACE/fox_12.1/bootable/recovery"
 
 # --- Safety checks ---
 if [ ! -d "$PATCHES_DIR" ]; then
