@@ -50,14 +50,14 @@ copy_patch "$PATCHES_DIR/maintainer.png" \
 copy_patch "$PATCHES_DIR/partitionmanager.cpp" \
 "$SOURCE_DIR/partitionmanager.cpp"
 
-copy_patch "$PATCHES_DIR/splash.xml" \
-"$SOURCE_DIR/gui/theme/portrait_hdpi/splash.xml"
+#copy_patch "$PATCHES_DIR/splash.xml" \
+#"$SOURCE_DIR/gui/theme/portrait_hdpi/splash.xml"
 
-copy_patch "$PATCHES_DIR/splash2.xml" \
-"$SOURCE_DIR/gui/theme/portrait_hdpi/themes/sed/splash.xml"
+#copy_patch "$PATCHES_DIR/splash2.xml" \
+#"$SOURCE_DIR/gui/theme/portrait_hdpi/themes/sed/splash.xml"
 
-copy_patch "$PATCHES_DIR/splash_orig.xml" \
-"$SOURCE_DIR/gui/theme/portrait_hdpi/themes/sed/splash_orig.xml"
+#copy_patch "$PATCHES_DIR/splash_orig.xml" \
+#"$SOURCE_DIR/gui/theme/portrait_hdpi/themes/sed/splash_orig.xml"
 
 copy_patch "$PATCHES_DIR/twrp-functions.cpp" \
 "$SOURCE_DIR/twrp-functions.cpp"
