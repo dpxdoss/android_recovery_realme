@@ -1,6 +1,6 @@
 # **Realme C3 / Narzo 10A — OrangeFox Recovery** 
 
-**Codename:** RMX2020 / RMX2027 **Variant:** RUI2 BASED **Version:** R11
+**Codename:** RMX2020 / RMX2027 **Variant:** RUI2 BASED
 
 ---
 
@@ -79,9 +79,9 @@ git clone https://github.com/dpxdoss/android_recovery_realme_RMX2020.git device/
 ## Build it
 
 ```
-cd ~/OrangeFox
+cd ~/fox_12.1
 source build/envsetup.sh
-lunch twrp_RMX2020-eng && mka adbd recoveryimage
+make clean && lunch twrp_RMX2020-eng && mka adbd recoveryimage
 
 ```
 
