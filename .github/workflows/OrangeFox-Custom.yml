@@ -32,7 +32,6 @@ on:
         - boot
         - recovery
         - vendorboot
-
 jobs:
   build:
     name: Build OFR by ${{ github.actor }}
@@ -77,16 +76,25 @@ jobs:
     
     - name: Apply Custom Patches
       env:
-          DEVICE_PATH: ${{ inputs.DEVICE_PATH }}
-          ORANGEFOX_PATH: ${{ env.ORANGEFOX_PATH }}
+        DEVICE_PATH: ${{ inputs.DEVICE_PATH }}
+        ORANGEFOX_PATH: ${{ env.ORANGEFOX_PATH }}
       run: |
         bash ${{ env.ORANGEFOX_PATH }}/${{ inputs.DEVICE_PATH }}/patches/patchsetup.sh
     
     - name: Building OrangeFox
       run: |
         cd ${{ env.ORANGEFOX_PATH }}
-        source build/envsetup.sh
-        lunch twrp_${{ inputs.DEVICE_NAME }}-eng && make clean && mka adbd ${{ inputs.BUILD_TARGET }}image
+        echo "=== Checking device tree setup ==="
+        ls -la device/realme/RMX2020/ || true
+        echo ""
+        echo "=== Sourcing build environment ==="
+        source build/envsetup.sh 2>&1 || { echo "Build envsetup failed!"; exit 1; }
+        echo ""
+        echo "=== Running lunch ==="
+        lunch twrp_${{ inputs.DEVICE_NAME }}-eng 2>&1 || { echo "Lunch failed!"; exit 1; }
+        echo ""
+        echo "=== Cleaning and building ==="
+        make clean && mka adbd ${{ inputs.BUILD_TARGET }}image 2>&1 || { echo "Build failed!"; exit 1; }
     
     - name: Set Release Properties
       run: |
