@@ -18,5 +18,5 @@ PRODUCT_TARGET_VNDK_VERSION := 34
 PRODUCT_SOONG_NAMESPACES += $(LOCAL_PATH)
 
 # some OrangeFox-specific settings
-$(call inherit-product, $(LOCAL_PATH)/twrp_RMX2020.mk)
+$(call inherit-product, $(LOCAL_PATH)/fox_RMX2020.mk)
 #
