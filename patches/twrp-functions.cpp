@@ -2673,7 +2673,7 @@ void TWFunc::Welcome_Message(void)
       	gui_msg(Msg(msg::kWarning, "fox_build_type_unofficial=[Build type]: Unofficial. No official support for unofficial builds"));
     else {
     	gui_msg(Msg("fox_build_type=[Build type]: {1}")(FOX_BUILD_TYPE));
-    	if (uppercase(FOX_BUILD_TYPE) == "BETA" || uppercase(FOX_BUILD_TYPE) == "STABLE" || uppercase(FOX_BUILD_TYPE) == "CUSTOM") {
+    	if (uppercase(FOX_BUILD_TYPE) == "BETA" || uppercase(FOX_BUILD_TYPE) == "STABLE") {
     	    string tg_link = "https://t.me/dantepaulxd_chats";
     	    gui_msg(Msg("fox_support=[Support]   : {1}")(tg_link.c_str()));
     	} else {
