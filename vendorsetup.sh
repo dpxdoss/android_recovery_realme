@@ -20,21 +20,9 @@
 # ofrp device
 FDEVICE="RMX2020"
 #set -o xtrace
-fox_get_target_device() {
-local chkdev=$(echo "$BASH_SOURCE" | grep -w $FDEVICE)
-   if [ -n "$chkdev" ]; then
-      FOX_BUILD_DEVICE="$FDEVICE"
-   else
-      chkdev=$(set | grep BASH_ARGV | grep -w $FDEVICE)
-      [ -n "$chkdev" ] && FOX_BUILD_DEVICE="$FDEVICE"
-   fi
-}
-if [ -z "$1" -a -z "$FOX_BUILD_DEVICE" ]; then
-   fox_get_target_device
-fi
-if [ "$1" = "$FDEVICE" -o "$FOX_BUILD_DEVICE" = "$FDEVICE" ]; then
+FOX_BUILD_DEVICE="RMX2020"
 # additional orangefox zip installer device
-export TARGET_DEVICE_ALT="RMX2027"
+export TARGET_DEVICE_ALT="RMX2020, RMX2027"
 # additional roms zip installer support
 export FOX_TARGET_DEVICES="RMX2020,RMX2027"
 # Initial Build Setup
@@ -103,13 +91,3 @@ export OF_IGNORE_LOGICAL_MOUNT_ERRORS=1
 export OF_WIPE_METADATA_AFTER_DATAFORMAT=1
 export OF_DISPLAY_FORMAT_FILESYSTEMS_DEBUG_INFO=1
 export OF_DONT_KEEP_LOG_HISTORY=1
-
-# let's see what are our build VARs
-if [ -n "$FOX_BUILD_LOG_FILE" -a -f "$FOX_BUILD_LOG_FILE" ]; then
-	export | grep "FOX" >> $FOX_BUILD_LOG_FILE
-	export | grep "OF_" >> $FOX_BUILD_LOG_FILE
-	export | grep "TARGET_" >> $FOX_BUILD_LOG_FILE
-	export | grep "TW_" >> $FOX_BUILD_LOG_FILE
-fi
-fi
-# end
