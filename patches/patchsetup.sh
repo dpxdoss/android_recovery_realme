@@ -39,7 +39,7 @@ copy_patch "$PATCHES_DIR/maintainer.png" \
 
 # rearrange wipe menu order placing removable device bottom.
 copy_patch "$PATCHES_DIR/partitionmanager.cpp" \
-"$SOURCE_DIR/partitionmanager.cpp"\
+"$SOURCE_DIR/partitionmanager.cpp"
 
 # replacing telegram support link on welcomed log.
 copy_patch "$PATCHES_DIR/twrp-functions.cpp" \
