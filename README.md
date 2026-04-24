@@ -56,35 +56,6 @@ fastboot reboot recovery
 
 ---
 
-## ⚡ Building Guide
-
-### Sync OrangeFox sources and minimal manifest
-
-```
-mkdir ~/OrangeFox_sync
-cd ~/OrangeFox_sync
-git clone https://gitlab.com/OrangeFox/sync.git
-cd ~/OrangeFox_sync/sync/
-./orangefox_sync.sh --branch 12.1 --path ~/fox_12.1
-```
-
-### Place device trees and kernel
-
-```
-cd ~/fox_12.1
-git clone https://github.com/dpxdoss/android_recovery_realme_RMX2020.git device/realme/RMX2020
-
-```
-
-## Build it
-
-```
-cd ~/fox_12.1
-source build/envsetup.sh
-make clean && lunch twrp_RMX2020-eng && mka adbd recoveryimage
-
-```
-
 ## 🙏 Credits
 
 * TeamWin — TWRP
