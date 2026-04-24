@@ -45,6 +45,20 @@ copy_patch "$PATCHES_DIR/partitionmanager.cpp" \
 copy_patch "$PATCHES_DIR/twrp-functions.cpp" \
 "$SOURCE_DIR/twrp-functions.cpp"
 
+# extra language support
+# Indonesian
+copy_patch "$PATCHES_DIR/id_ID.xml" \
+"$SOURCE_DIR/gui/theme/common/languages/id_ID.xml"
+# Bengali
+copy_patch "$PATCHES_DIR/bn_BD.xml" \
+"$SOURCE_DIR/gui/theme/common/languages/bn_BD.xml"
+# Hindi
+copy_patch "$PATCHES_DIR/hi_IN.xml" \
+"$SOURCE_DIR/gui/theme/common/languages/hi_IN.xml"
+# Russian
+copy_patch "$PATCHES_DIR/ru_RU.xml" \
+"$SOURCE_DIR/gui/theme/common/languages/ru_RU.xml"
+
 # custom default theme configs
 #copy_patch "$PATCHES_DIR/splash.xml" \
 #"$SOURCE_DIR/gui/theme/portrait_hdpi/splash.xml"
