@@ -38,14 +38,17 @@ fi
 
 if [ "$1" = "$FDEVICE" -o "$FOX_BUILD_DEVICE" = "$FDEVICE" ]; then
 
+# additional orangefox zip installer device
 export TARGET_DEVICE_ALT="RMX2027"
+# additional roms zip installer support
 export FOX_TARGET_DEVICES="RMX2020,RMX2027"
 
-# Initial Info
+# Initial Build Setup
 export LC_ALL="C"
 export ALLOW_MISSING_DEPENDENCIES=true
 
 # Maintainer Info
+export OF_MAINTAINER="Dante @dantepaulxd"
 export FOX_BUILD_TYPE="Beta"
 export FOX_VARIANT="12.1"
 
@@ -54,6 +57,8 @@ export FOX_SETTINGS_ROOT_DIRECTORY=/persist
 export FOX_MISCELLANEOUS_ROOT_DIRECTORY=/sdcard
 export FOX_RECOVERY_SYSTEM_PARTITION="/dev/block/mapper/system"
 export FOX_RECOVERY_VENDOR_PARTITION="/dev/block/mapper/vendor"
+export OF_QUICK_BACKUP_LIST="/nvram;/nvdata;/nvcfg;/protect_f;/protect_s;/proinfo;/oppo_custom;/md1img;"
+export OF_DYNAMIC_FULL_SIZE=6685720576
 
 # Addon Patches
 export FOX_ENABLE_KERNELSU_NEXT_SUPPORT=1
@@ -71,8 +76,19 @@ export FOX_USE_NANO_EDITOR=1
 export FOX_USE_BASH_SHELL=1
 export FOX_ASH_IS_BASH=1
 
-# Other Patches
+# Settings Config
 export FOX_ALLOW_EARLY_SETTINGS_LOAD=1
+export OF_NO_TREBLE_COMPATIBILITY_CHECK=1
+export OF_ENABLE_ALL_PARTITION_TOOLS=1
+export OF_ADVANCED_SECURITY=1
+export OF_DISABLE_EXTRA_ABOUT_PAGE=1
+export OF_USE_LOCKSCREEN_BUTTON=1
+export OF_USE_GREEN_LED=0
+export OF_ALLOW_DISABLE_NAVBAR=0
+export OF_NO_SPLASH_CHANGE=1
+export OF_OPTIONS_LIST_NUM=8
+export OF_DEFAULT_TIMEZONE="GMT-5:30"
+export OF_FLASHLIGHT_ENABLE=0
 
 # Binary Patches
 export FOX_USE_BUSYBOX_BINARY=1
@@ -82,6 +98,26 @@ export FOX_USE_ZIP_BINARY=1
 export FOX_USE_SED_BINARY=1
 export FOX_USE_LZ4_BINARY=1
 export FOX_USE_XZ_UTILS=1
+
+# Additional OTA support
+export OF_SUPPORT_OZIP_DECRYPTION=1
+export OF_NO_ADDITIONAL_MIUI_PROPS_CHECK=1
+export OF_FIX_OTA_UPDATE_MANUAL_FLASH_ERROR=1
+export OF_SUPPORT_ALL_BLOCK_OTA_UPDATES=1
+
+# Orangefox Configs
+export OF_SCREEN_H=2400
+export OF_STATUS_H=80
+export OF_STATUS_INDENT_RIGHT=48
+export OF_STATUS_INDENT_LEFT=48
+export OF_CLOCK_POS=1
+export OF_HIDE_NOTCH=1
+
+# Decryption Helper
+export OF_IGNORE_LOGICAL_MOUNT_ERRORS=1
+export OF_WIPE_METADATA_AFTER_DATAFORMAT=1
+export OF_DISPLAY_FORMAT_FILESYSTEMS_DEBUG_INFO=1
+export OF_DONT_KEEP_LOG_HISTORY=1
 
 	# let's see what are our build VARs
 if [ -n "$FOX_BUILD_LOG_FILE" -a -f "$FOX_BUILD_LOG_FILE" ]; then
