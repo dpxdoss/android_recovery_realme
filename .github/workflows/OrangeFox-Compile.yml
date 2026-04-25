@@ -20,7 +20,7 @@ on:
       DEVICE_TREE:
         description: 'OrangeFox Device Tree'
         required: true
-        default: 'https://github.com/dpxdoss/device_realme_RMX2020-ofrp'
+        default: 'https://github.com/dpxdoss/recovery_device_realme_RMX2020'
       DEVICE_TREE_BRANCH:
         description: 'OrangeFox Device Tree Branch'
         required: true
