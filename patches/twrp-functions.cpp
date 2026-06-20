@@ -2674,7 +2674,7 @@ void TWFunc::Welcome_Message(void)
     else {
     	gui_msg(Msg("fox_build_type=[Build type]: {1}")(FOX_BUILD_TYPE));
     	if (uppercase(FOX_BUILD_TYPE) == "BETA" || uppercase(FOX_BUILD_TYPE) == "STABLE") {
-    	    string tg_link = "https://t.me/dantepaulxd_chats";
+    	    string tg_link = "https://t.me/dantepaulxd_discussions";
     	    gui_msg(Msg("fox_support=[Support]   : {1}")(tg_link.c_str()));
     	} else {
     	    gui_msg(Msg(msg::kWarning, "fox_nosupport=[Support]   : No official support for unknown builds"));
