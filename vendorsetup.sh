@@ -29,7 +29,7 @@ export FOX_TARGET_DEVICES="RMX2020,RMX2027"
 export LC_ALL="C"
 export ALLOW_MISSING_DEPENDENCIES=true
 # Maintainer Info
-export OF_MAINTAINER="Dante @dantepaulxd"
+export OF_MAINTAINER="Dante TG@dantepaulxd"
 export FOX_BUILD_TYPE="Beta"
 export FOX_VARIANT="12.1"
 # Directory Info
@@ -41,13 +41,36 @@ export OF_QUICK_BACKUP_LIST="/nvram;/nvdata;/nvcfg;/protect_f;/protect_s;/proinf
 export OF_DYNAMIC_FULL_SIZE=6685720576
 # Addon Patches
 export FOX_ENABLE_KERNELSU_NEXT_SUPPORT=1
-export FOX_ENABLE_KERNELSU_SUPPORT=1
 export FOX_ENABLE_SUKISU_SUPPORT=1
 export FOX_ENABLE_APP_MANAGER=0
 export FOX_DELETE_INITD_ADDON=1
 export FOX_DELETE_AROMAFM=1
-export FOX_DELETE_MAGISK_ADDON=1
+	# Magisk
+	function download_magisk(){
+		# Usage: download_magisk <destination_path>
+		local DEST=$1
+		if [ -n "${DEST}" ]; then
+			if [ ! -e ${DEST} ]; then
+				echo "Downloading the Latest Release of Magisk..."
+				local LATEST_MAGISK_URL=$(curl -sL https://api.github.com/repos/topjohnwu/Magisk/releases/latest | grep browser_download_url | grep Magisk- | cut -d : -f 2,3 | tr -d '"')
+				mkdir -p $(dirname ${DEST})
+				wget -q ${LATEST_MAGISK_URL} -O ${DEST} || wget ${LATEST_MAGISK_URL} -O ${DEST}
+				local RCODE=$?
+				if [ "$RCODE" = "0" ]; then
+					echo "Successfully Downloaded Magisk to ${DEST}!"
+					echo "Done!"
+				else
+					echo "Failed to Download Magisk to ${DEST}!"
+				fi
+			fi
+		fi
+	}
+export FOX_USE_SPECIFIC_MAGISK_ZIP=~/Magisk/Magisk.zip
+download_magisk $FOX_USE_SPECIFIC_MAGISK_ZIP
 export FOX_USE_UPDATED_MAGISKBOOT=1
+export OF_USE_MAGISKBOOT_FOR_ALL_PATCHES=1
+export OF_PATCH_AVB20=1
+
 export FOX_REPLACE_TOOLBOX_GETPROP=1
 # Shell Patches
 export FOX_USE_NANO_EDITOR=1
@@ -62,7 +85,7 @@ export OF_DISABLE_EXTRA_ABOUT_PAGE=1
 export OF_USE_LOCKSCREEN_BUTTON=1
 export OF_USE_GREEN_LED=0
 export OF_ALLOW_DISABLE_NAVBAR=0
-export OF_NO_SPLASH_CHANGE=1
+export OF_SPLASH_MAX_SIZE=130
 export OF_OPTIONS_LIST_NUM=8
 export OF_DEFAULT_TIMEZONE="GMT-5:30"
 export OF_FLASHLIGHT_ENABLE=0
