@@ -40,8 +40,6 @@ export FOX_RECOVERY_VENDOR_PARTITION="/dev/block/mapper/vendor"
 export OF_QUICK_BACKUP_LIST="/nvram;/nvdata;/nvcfg;/protect_f;/protect_s;/proinfo;/oppo_custom;/md1img;"
 export OF_DYNAMIC_FULL_SIZE=6685720576
 # Addon Patches
-export FOX_ENABLE_KERNELSU_NEXT_SUPPORT=1
-export FOX_ENABLE_SUKISU_SUPPORT=1
 export FOX_ENABLE_APP_MANAGER=0
 export FOX_DELETE_INITD_ADDON=1
 export FOX_DELETE_AROMAFM=1
