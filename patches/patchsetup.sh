@@ -46,8 +46,8 @@ copy_patch "$PATCHES_DIR/partitionmanager.cpp" \
 "$SOURCE_DIR/partitionmanager.cpp"
 
 # replacing telegram support link on welcomed log.
-copy_patch "$PATCHES_DIR/twrp-functions.cpp" \
-"$SOURCE_DIR/twrp-functions.cpp"
+# copy_patch "$PATCHES_DIR/twrp-functions.cpp" \
+# "$SOURCE_DIR/twrp-functions.cpp"
 
 # extra language support
 # Indonesian
