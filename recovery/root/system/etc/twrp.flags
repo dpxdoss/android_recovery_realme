@@ -1,9 +1,10 @@
 # point                 fstype     block                          block2                    flags
 
 # logical (added logical specific partitions)
-/system_image	         emmc	          /dev/block/mapper/system          flags=display="System Image";backup=1;flashimg=1
-/vendor_image          emmc	          /dev/block/mapper/vendor          flags=display="Vendor Image";backup=1;flashimg=1
-/odm_image             emmc           /dev/block/mapper/odm             flags=display="Odm Image";backup=1;flashimg=1
+/system_image            emmc       /dev/block/by-name/system                               flags=display="System Image";backup=1;flashimg=1
+/product_image           emmc       /dev/block/by-name/product                              flags=display=Product Image";backup=1;flashimg=1
+/vendor_image            emmc	      /dev/block/mapper/vendor                                flags=display="Vendor Image";backup=1;flashimg=1
+/odm_image               emmc       /dev/block/mapper/odm                                   flags=display="Odm Image";backup=1;flashimg=1
 
 # user (auto mount by recovery itself by target address)
 /data                    f2fs      /dev/block/by-name/userdata                              flags=fileencryption=aes-256-xts:aes-256-cts:v1
